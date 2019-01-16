@@ -63,7 +63,6 @@
 
 <script>
 export default {
-
   data () {
     return {
       checkout: false,
@@ -87,7 +86,8 @@ export default {
          return;
        }
        this.cart.items.push(this.product); 
-       this.checkout = false;         
+       this.checkout = false;      
+       
       },
       removeItem: function () {
          let index = this.cart.items.indexOf(this.cart.items);
@@ -98,24 +98,27 @@ export default {
       addToCart: function() {
         this.shopCart.push(this.product);
         this.checkout = true;
+        this.setTotal();   
       },
       removeFromCart: function () {
          let row = this.shopCart.indexOf(this.cart.items);
         /*Removes the product from the listOfItems array which st
         ores all the items in the shopping cart */
         this.shopCart.splice(row, 1); //
+        this.setTotal();
+      },
+      setTotal: function () {
+        return this.cartTotal;
       }
-
     },
     
     computed: {
         cartTotal: function() {
             var total = 0;
         
-            this.cart.items.forEach(function(item) {
+            this.shopCart.forEach(function(item) {
                 total += item.product_quantity * item.product_price;
             });
-
             return total;
         },
     }
